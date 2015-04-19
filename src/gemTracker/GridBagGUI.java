@@ -43,7 +43,7 @@ public class GridBagGUI extends JFrame {
 	
 	private Future<?> future = null;
 	public static Integer CGem, CG, CS, CC, notifyAmount, notifyGem;
-	public long time = 0;
+	private long time = 0;
 	
 	private gemTracker.CTG ctg = new gemTracker.CTG();
 	
@@ -352,7 +352,7 @@ public class GridBagGUI extends JFrame {
 	/*
 	 * "Gold" Button from the Buttons Panel to show the gold view
 	 */
-	public class GoldButtonHandler implements ActionListener {
+	private class GoldButtonHandler implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
 			showGem = false;
 			showCustom = false;
@@ -363,7 +363,7 @@ public class GridBagGUI extends JFrame {
 	/*
 	 * "Gem" Button from the Buttons Panel to show the gem view
 	 */
-	public class GemButtonHandler implements ActionListener {
+	private class GemButtonHandler implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
 			showGem = true;
 			showCustom = false;
@@ -374,7 +374,7 @@ public class GridBagGUI extends JFrame {
 	/*
 	 * Notify button from the Notification Panel 
 	 */
-	public class NotifyButtonHandler implements ActionListener {
+	private class NotifyButtonHandler implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
 			String g, s, c, gem;
 			
@@ -418,7 +418,7 @@ public class GridBagGUI extends JFrame {
 	/* 
 	 * Off button in the Notification Panel
 	 */
-	public class NOffButtonHandler implements ActionListener {
+	private class NOffButtonHandler implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
 				notifyOn = false;
 				notifyAmount = 0;
@@ -438,7 +438,7 @@ public class GridBagGUI extends JFrame {
 	 * Custom Button from the Buttons Panel which makes another GUI
 	 * for the user to enter custom amount of gold or gems
 	 */
-	public class CustomButtonHandler implements ActionListener {
+	private class CustomButtonHandler implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
 	        /*
 	         * Create and set up the window.
@@ -466,7 +466,7 @@ public class GridBagGUI extends JFrame {
 	 * Set Button from the Auto Update Panel.
 	 * Schedules a task to automatically update the view (big black box)s
 	 */
-	public class UpdateButtonHandler implements ActionListener {
+	private class UpdateButtonHandler implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
 			String stime;
 			
@@ -498,7 +498,7 @@ public class GridBagGUI extends JFrame {
 	/*
 	 * Off button from Automatic Update
 	 */
-	public class AOffButtonHandler implements ActionListener {
+	private class AOffButtonHandler implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
 				if (future != null) {
 					future.cancel(true);
@@ -513,7 +513,7 @@ public class GridBagGUI extends JFrame {
 	/*
 	 * This function displays the results onto the displayPanel (big black box).
 	 */
-	public void showPrices() {
+	private void showPrices() {
 		try {
 			if (showGem) {
 				pricesTA.setText(ctg.reverseTable());

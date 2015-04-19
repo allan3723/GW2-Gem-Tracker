@@ -12,8 +12,6 @@ import java.util.concurrent.Future;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
-import gemTracker.CTG;
-
 import org.json.*;
 
 public class GridBagGUI extends JFrame {
@@ -25,32 +23,34 @@ public class GridBagGUI extends JFrame {
 	public static Boolean showGem = false, showCustom = false, CustomGem = false,
 						  notifyOn = false;
 	
-	private static JLabel minL, gL, sL, cL, gemL;
-	private static JFormattedTextField timeTF, gTF, sTF, cTF, gemTF;
-	private static JButton goldB, gemB, customB, autoB, aoffB, notificationB, noffB;
+	private JLabel minL, gL, sL, cL, gemL;
+	private JFormattedTextField timeTF, gTF, sTF, cTF, gemTF;
+	private JButton goldB, gemB, customB, autoB, aoffB, notificationB, noffB;
 	public static JTextArea pricesTA;
 	
-	private static GoldButtonHandler gdbHandler;
-	private static GemButtonHandler gmbHandler;
-	private static CustomButtonHandler cbHandler;
-	private static UpdateButtonHandler ubHandler;
-	private static NotifyButtonHandler nbHandler;
-	private static NOffButtonHandler nobHandler;
-	private static AOffButtonHandler aobHandler;
+	private GoldButtonHandler gdbHandler;
+	private GemButtonHandler gmbHandler;
+	private CustomButtonHandler cbHandler;
+	private UpdateButtonHandler ubHandler;
+	private NotifyButtonHandler nbHandler;
+	private NOffButtonHandler nobHandler;
+	private AOffButtonHandler aobHandler;
 	
-    private static ScheduledExecutorService executor; 
+    private ScheduledExecutorService executor; 
 	
 	private static final int CUSTOMWIDTH = 350;
 	private static final int CUSTOMHEIGHT = 110;
 	
-	private static Future<?> future = null;
+	private Future<?> future = null;
 	public static Integer CGem, CG, CS, CC, notifyAmount, notifyGem;
-	public static long time = 0;
+	public long time = 0;
+	
+	private gemTracker.CTG ctg = new gemTracker.CTG();
 	
 	/*
 	 * Main panel that holds the other 4 panels
 	 */
-	public static void addComponent(Container mPanel) {		
+	public void addComponent(Container mPanel) {		
 		mPanel.setLayout(new GridBagLayout());
 		GridBagConstraints c = new GridBagConstraints();
 
@@ -85,7 +85,7 @@ public class GridBagGUI extends JFrame {
 	/*
 	 * The top panel which contains the 3 button: Gold, Gem, Custom
 	 */
-	private static JPanel buttonPanel() {
+	private JPanel buttonPanel() {
 		/*
 		 * Build Panel
 		 */
@@ -134,7 +134,7 @@ public class GridBagGUI extends JFrame {
 	/*
 	 * Build the display panel (big black box). All results are shown here.
 	 */
-	private static JPanel displayPanel() {
+	private JPanel displayPanel() {
 		/*
 		 * Build Panel
 		 */
@@ -166,7 +166,7 @@ public class GridBagGUI extends JFrame {
 	/*
 	 * Panel for Auto Update
 	 */
-	private static JPanel autoUpdatePanel() {
+	private JPanel autoUpdatePanel() {
 		/*
 		 * Build Panel
 		 */
@@ -231,7 +231,7 @@ public class GridBagGUI extends JFrame {
 	 * Panel to set notification for when a specific amount of gold
 	 * drops to a specific amount of gems
 	 */
-	private static JPanel notifyPanel() {
+	private JPanel notifyPanel() {
 		JPanel nPanel = new JPanel();
 		GridBagConstraints c = new GridBagConstraints();
 		nPanel.setLayout(new GridBagLayout());
@@ -352,7 +352,7 @@ public class GridBagGUI extends JFrame {
 	/*
 	 * "Gold" Button from the Buttons Panel to show the gold view
 	 */
-	public static class GoldButtonHandler implements ActionListener {
+	public class GoldButtonHandler implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
 			showGem = false;
 			showCustom = false;
@@ -363,7 +363,7 @@ public class GridBagGUI extends JFrame {
 	/*
 	 * "Gem" Button from the Buttons Panel to show the gem view
 	 */
-	public static class GemButtonHandler implements ActionListener {
+	public class GemButtonHandler implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
 			showGem = true;
 			showCustom = false;
@@ -374,7 +374,7 @@ public class GridBagGUI extends JFrame {
 	/*
 	 * Notify button from the Notification Panel 
 	 */
-	public static class NotifyButtonHandler implements ActionListener {
+	public class NotifyButtonHandler implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
 			String g, s, c, gem;
 			
@@ -418,7 +418,7 @@ public class GridBagGUI extends JFrame {
 	/* 
 	 * Off button in the Notification Panel
 	 */
-	public static class NOffButtonHandler implements ActionListener {
+	public class NOffButtonHandler implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
 				notifyOn = false;
 				notifyAmount = 0;
@@ -438,7 +438,7 @@ public class GridBagGUI extends JFrame {
 	 * Custom Button from the Buttons Panel which makes another GUI
 	 * for the user to enter custom amount of gold or gems
 	 */
-	public static class CustomButtonHandler implements ActionListener {
+	public class CustomButtonHandler implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
 	        /*
 	         * Create and set up the window.
@@ -450,7 +450,8 @@ public class GridBagGUI extends JFrame {
 	        /*
 	         * Set up the content pane.
 	         */
-	        customGUI.addComponent(customframe.getContentPane());
+	        customGUI cGUI = new customGUI();
+	        cGUI.addComponent(customframe.getContentPane());
 
 	        /*
 	         * Display the window.
@@ -465,7 +466,7 @@ public class GridBagGUI extends JFrame {
 	 * Set Button from the Auto Update Panel.
 	 * Schedules a task to automatically update the view (big black box)s
 	 */
-	public static class UpdateButtonHandler implements ActionListener {
+	public class UpdateButtonHandler implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
 			String stime;
 			
@@ -497,7 +498,7 @@ public class GridBagGUI extends JFrame {
 	/*
 	 * Off button from Automatic Update
 	 */
-	public static class AOffButtonHandler implements ActionListener {
+	public class AOffButtonHandler implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
 				if (future != null) {
 					future.cancel(true);
@@ -512,19 +513,19 @@ public class GridBagGUI extends JFrame {
 	/*
 	 * This function displays the results onto the displayPanel (big black box).
 	 */
-	public static void showPrices() {
+	public void showPrices() {
 		try {
 			if (showGem) {
-				pricesTA.setText(CTG.reverseTable());
+				pricesTA.setText(ctg.reverseTable());
 			}
 			else {
 				if (!showCustom)
-					pricesTA.setText(CTG.showTable());
+					pricesTA.setText(ctg.showTable());
 				else {
 					if (CustomGem)
-						pricesTA.setText(CTG.customGemAmount(CGem));
+						pricesTA.setText(ctg.customGemAmount(CGem));
 					else
-						pricesTA.setText(CTG.customAmount(CG,CS,CC));
+						pricesTA.setText(ctg.customAmount(CG,CS,CC));
 				}
 			}
 				
@@ -541,7 +542,7 @@ public class GridBagGUI extends JFrame {
 	 * the user-entered amount of gems. If it can, the program will play a
 	 * notification sound to alert the user.
 	 */
-	private static class task implements Runnable {
+	private class task implements Runnable {
 		public void run() {
 			showPrices();
 			
@@ -551,10 +552,23 @@ public class GridBagGUI extends JFrame {
 				try {
 					JSONObject obj = jGW2API.getCoins(notifyAmount.toString());
 					gem = obj.getInt("quantity");
+					
 				} catch (JSONException e) {
 					e.printStackTrace();
 				} catch (IOException e) {
-					e.printStackTrace();
+					pricesTA.setText("Notification values too low or high.\nNotification has been turned off.");
+					notifyOn = false;
+					notifyAmount = 0;
+					notifyGem = 0;
+					gTF.setText("");
+					sTF.setText("");
+					cTF.setText("");
+					gemTF.setText("");
+					gTF.setForeground(Color.BLACK);
+					sTF.setForeground(Color.BLACK);
+					cTF.setForeground(Color.BLACK);
+					gemTF.setForeground(Color.BLACK);
+					return;
 				}
 
 				if (gem >= notifyGem) {
@@ -567,7 +581,7 @@ public class GridBagGUI extends JFrame {
 	/*
 	 * Plays the beep sound 10 times
 	 */
-	static class beep extends Thread {
+	class beep extends Thread {
 		public void run() {
 			for(int i = 0; i < 10; i++) {
 				Toolkit.getDefaultToolkit().beep();
@@ -583,7 +597,7 @@ public class GridBagGUI extends JFrame {
 	/*
 	 * Set up new Thread to show prices for gold + gem button
 	 */
-	static class show extends Thread {
+	class show extends Thread {
 		public void run() {
 			showPrices();
 		}
@@ -592,7 +606,7 @@ public class GridBagGUI extends JFrame {
 	/*
 	 * Sets up GUI
 	 */
-    private static void createAndShowGUI() {
+    private void createAndShowGUI() {
         //Create and set up the window.
         JFrame frame = new JFrame("GW2 Gold to Gem Rate Tracker");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -607,6 +621,7 @@ public class GridBagGUI extends JFrame {
     }
 
 	public static void main(String[] args) {
-		createAndShowGUI();
+		GridBagGUI gui = new GridBagGUI();
+		gui.createAndShowGUI();
 	}
 }

@@ -12,7 +12,7 @@ public class CTG {
 	 * Function to display the view for gold -> gem at
 	 * 10g, 50g, 100g, and 200g
 	 */
-	public static String showTable() throws IOException, JSONException {	
+	public String showTable() throws IOException, JSONException {	
 		JSONObject coinObj = jGW2API.getCoins("100000");
 		JSONObject coinObj50 = jGW2API.getCoins("500000");
 		JSONObject coinObj100 = jGW2API.getCoins("1000000");
@@ -32,7 +32,7 @@ public class CTG {
 	 * Makes an attempt to calculate it since unable to extract the actual
 	 * amount from the GW2 API. (No parameter for gems in the API)
 	 */
-	public static String reverseTable() throws IOException, JSONException {
+	public String reverseTable() throws IOException, JSONException {
 		int coin, coin2, coin3, coin4, g, s, c;
 		float fee = 0.7225f; 	
 		/*
@@ -83,7 +83,7 @@ public class CTG {
 	/*
 	 * Calculates the custom amount for gold -> gem and display it
 	 */
-	public static String customAmount(Integer g, Integer s, Integer c) throws IOException, JSONException {	 
+	public String customAmount(Integer g, Integer s, Integer c) throws IOException, JSONException {	 
 		Integer input = (g*10000) + (s*100) + c;
 		JSONObject coinObj = jGW2API.getCoins(input.toString());
 		
@@ -95,7 +95,7 @@ public class CTG {
 	 * Calculates the custom amount for gem -> gold and display it.
 	 * Also not precise like the gem view in reverseTable()
 	 */
-	public static String customGemAmount(Integer amount) throws IOException, JSONException {
+	public String customGemAmount(Integer amount) throws IOException, JSONException {
 		int coin, c, g, s;
 		float fee = 0.7225f;
 		/*

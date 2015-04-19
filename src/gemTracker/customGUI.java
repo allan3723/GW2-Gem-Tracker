@@ -8,7 +8,6 @@ import java.awt.event.*;
 import java.io.IOException;
 import java.text.NumberFormat;
 
-import gemTracker.CTG;
 import gemTracker.GridBagGUI;
 
 import org.json.*;
@@ -19,16 +18,18 @@ public class customGUI extends JFrame {
 	 */
 	private static final long serialVersionUID = 1051272020740104442L;
 	
-	private static JFormattedTextField gemTF, gTF, sTF, cTF;;
-	private static JLabel gemL, gL, sL, cL;
-	private static JButton calcGMB, calcGDB;
-	private static CalculateGemButtonHandler cgmbHandler;
-	private static CalculateGoldButtonHandler cgdbHandler;
+	private JFormattedTextField gemTF, gTF, sTF, cTF;;
+	private JLabel gemL, gL, sL, cL;
+	private JButton calcGMB, calcGDB;
+	private CalculateGemButtonHandler cgmbHandler;
+	private CalculateGoldButtonHandler cgdbHandler;
+	
+	private gemTracker.CTG ctg = new gemTracker.CTG();
 
 	/* 
 	 * Create the Panel
 	 */
-	public static void addComponent(Container pane) {		
+	public void addComponent(Container pane) {		
 		pane.setLayout(new GridBagLayout());
 		GridBagConstraints c = new GridBagConstraints();
 		c.fill = GridBagConstraints.HORIZONTAL;
@@ -137,9 +138,8 @@ public class customGUI extends JFrame {
 		pane.add(calcGDB, c);
 	}
 	
-	private static class CalculateGemButtonHandler implements ActionListener {
+	private class CalculateGemButtonHandler implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
-			String output = new String();
 			String gem;
 			
 			/*
@@ -170,7 +170,7 @@ public class customGUI extends JFrame {
 	/*
 	 * Same as the function before this but for gold -> gem
 	 */
-	private static class CalculateGoldButtonHandler implements ActionListener {
+	private class CalculateGoldButtonHandler implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
 			String gold, silver, copper;
 			
@@ -213,12 +213,12 @@ public class customGUI extends JFrame {
 	/*
 	 * New thread to show custom amount for gem
 	 */
-	static class showGem extends Thread {
+	class showGem extends Thread {
 		public void run() {
 			String output = new String();
 			
 			try {
-				output = CTG.customGemAmount(GridBagGUI.CGem);
+				output = ctg.customGemAmount(GridBagGUI.CGem);
 			} catch (IOException e1) {
 				GridBagGUI.pricesTA.setText("Error: Input value is too high or low.\n");
 			} catch (JSONException e1) {
@@ -229,12 +229,12 @@ public class customGUI extends JFrame {
 		}
 	}
 	
-	static class showGold extends Thread {
+	class showGold extends Thread {
 		public void run() {
 			String output = new String();
 			
 			try {
-				output = CTG.customAmount(GridBagGUI.CG,GridBagGUI.CS,GridBagGUI.CC);
+				output = ctg.customAmount(GridBagGUI.CG,GridBagGUI.CS,GridBagGUI.CC);
 			} catch (IOException e1) {
 				GridBagGUI.pricesTA.setText("Error: Input value too high or low.\n");
 			} catch (JSONException e1) {

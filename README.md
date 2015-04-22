@@ -5,11 +5,14 @@ Main Purpose: Extracts the Gold -> Gem rate and display it in a GUI. Also allows
 
 Four main files: CTG.java, customGUI.java, GridBagGUI.java, jGW2API.java
 
-CTG:        Extracts and calculates all the gold to gem exchange rate
+CTG:        Extracts and calculates all the gold to gem exchange rate. Since there is currently no way of getting the
+            cost of X amount of gems off the API, it has to be calculated. The result is not exact, but is fairly close
+            to the actual amount. However, the amount of gems you can buy with X amount of gold is accurate since that
+            is straight from the API.
 
-customGUI:  Creates a new frame for the user to input custom amounts to display
+customGUI:  Creates a new frame for the user to input custom amounts to display.
 
-GridBagGUI: Builds the main GUI where all the information is displayed
+GridBagGUI: Builds the main GUI where all the information is displayed.
 
 jGW2API:    Taken from Varonth's wrapper class at (https://code.google.com/p/j-gw2-api/). Used Veroth's jGW2API.java file
             to establish connection to the API and modified it to used V2 of the API - mainly to use commerce/exchange

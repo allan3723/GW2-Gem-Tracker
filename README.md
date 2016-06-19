@@ -18,5 +18,11 @@ jGW2API:    Taken from Varonth's wrapper class at (https://code.google.com/p/j-g
             to establish connection to the API and modified it to used V2 of the API - mainly to use commerce/exchange
             of the GW2 API:2.
             
+
+Screenshots:
+
+
+
+<img src="https://raw.githubusercontent.com/allan3723/GW2-Gem-Tracker/master/Screenshots/Gold-to-Gem.png" width="360" height="640" />
             
 API information located at: http://wiki.guildwars2.com/wiki/API:2/commerce/prices

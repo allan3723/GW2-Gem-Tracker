@@ -83,9 +83,9 @@ public class CTG {
 	/*
 	 * Calculates the custom amount for gold -> gem and display it
 	 */
-	public String customAmount(Integer g, Integer s, Integer c) throws IOException, JSONException {	 
-		Integer input = (g*10000) + (s*100) + c;
-		JSONObject coinObj = jGW2API.getCoins(input.toString());
+	public String customAmount(int g, int s, int c) throws IOException, JSONException {	 
+		int input = (g*10000) + (s*100) + c;
+		JSONObject coinObj = jGW2API.getCoins(String.valueOf(input));
 		
 		return new String("\n\n\tAmount:\t"+coinObj.getInt("quantity")+" Gems\n"+
 						"\n\n\tCost:\t\t"+g+"g  "+s+"s  "+c+"c\n");
@@ -95,14 +95,14 @@ public class CTG {
 	 * Calculates the custom amount for gem -> gold and display it.
 	 * Also not precise like the gem view in reverseTable()
 	 */
-	public String customGemAmount(Integer amount) throws IOException, JSONException {
+	public String customGemAmount(int amount) throws IOException, JSONException {
 		int coin, c, g, s;
 		float fee = 0.7225f;
 		/*
 		 * 0.85 * 0.85 = 0.7225 (15% transaction fee going both ways)
 		 */
 		
-		JSONObject coinObj = jGW2API.getGems(amount.toString());
+		JSONObject coinObj = jGW2API.getGems(String.valueOf(amount));
 		
 		/*
 		 * Adding coins_per_gem into the formula makes it more accurate to the actual amount

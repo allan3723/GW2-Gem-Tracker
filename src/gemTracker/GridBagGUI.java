@@ -20,7 +20,7 @@ public class GridBagGUI extends JFrame {
 	 */
 	private static final long serialVersionUID = -8747879380999760687L;
 
-	public static Boolean showGem = false, showCustom = false, CustomGem = false,
+	public static boolean showGem = false, showCustom = false, CustomGem = false,
 						  notifyOn = false;
 	
 	private JLabel minL, gL, sL, cL, gemL;
@@ -42,7 +42,7 @@ public class GridBagGUI extends JFrame {
 	private static final int CUSTOMHEIGHT = 110;
 	
 	private Future<?> future = null;
-	public static Integer CGem, CG, CS, CC, notifyAmount, notifyGem;
+	public static int CGem, CG, CS, CC, notifyAmount, notifyGem;
 	private long time = 0;
 	
 	private gemTracker.CTG ctg = new gemTracker.CTG();
@@ -550,7 +550,7 @@ public class GridBagGUI extends JFrame {
 			
 			if (notifyOn) {
 				try {
-					JSONObject obj = jGW2API.getCoins(notifyAmount.toString());
+					JSONObject obj = jGW2API.getCoins(String.valueOf(notifyAmount));
 					gem = obj.getInt("quantity");
 					
 				} catch (JSONException e) {
